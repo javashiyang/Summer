@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powernode.model.dao.DeptDao">
+  <resultMap id="BaseResultMap" type="com.powernode.entity.Dept">
+    <id column="deptno" jdbcType="INTEGER" property="deptno" />
+    <result column="deptname" jdbcType="VARCHAR" property="deptname" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="deptLoc" jdbcType="VARCHAR" property="deptloc" />
+    <result column="sal" jdbcType="VARCHAR" property="sal" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    deptno, deptname, sex, deptLoc, sal, `uid`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dept
+    where deptno = #{deptno,jdbcType=INTEGER}
+  </select>
+<!--查询所有-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dept
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dept
+    where deptno = #{deptno,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="deptno" keyProperty="deptno" parameterType="com.powernode.entity.Dept" useGeneratedKeys="true">
+    insert into dept (deptname, sex, deptLoc, 
+      sal, `uid`)
+    values (#{deptname,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{deptloc,jdbcType=VARCHAR}, 
+      #{sal,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="deptno" keyProperty="deptno" parameterType="com.powernode.entity.Dept" useGeneratedKeys="true">
+    insert into dept
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deptname != null">
+        deptname,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="deptloc != null">
+        deptLoc,
+      </if>
+      <if test="sal != null">
+        sal,
+      </if>
+      <if test="uid != null">
+        `uid`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deptname != null">
+        #{deptname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="deptloc != null">
+        #{deptloc,jdbcType=VARCHAR},
+      </if>
+      <if test="sal != null">
+        #{sal,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.powernode.entity.Dept">
+    update dept
+    <set>
+      <if test="deptname != null">
+        deptname = #{deptname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="deptloc != null">
+        deptLoc = #{deptloc,jdbcType=VARCHAR},
+      </if>
+      <if test="sal != null">
+        sal = #{sal,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where deptno = #{deptno,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.powernode.entity.Dept">
+    update dept
+    set deptname = #{deptname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      deptLoc = #{deptloc,jdbcType=VARCHAR},
+      sal = #{sal,jdbcType=VARCHAR},
+      `uid` = #{uid,jdbcType=INTEGER}
+    where deptno = #{deptno,jdbcType=INTEGER}
+  </update>
+</mapper>
